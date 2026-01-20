@@ -1,0 +1,43 @@
+// Here you can add other styles
+*{
+    list-style: none;
+}
+
+ul {
+    padding: 0 !important;
+}
+
+.sidebar-nav .nav-group.show .nav-group-toggle, .sidebar-nav .nav-group.show .nav-group-toggle svg, .sidebar-nav .nav-link.active, .sidebar-nav .nav-link.active .nav-icon {
+    color: #2885d4 !important;
+}
+
+.order-Processing .ant-select-selector{
+    background-color: rgb(173, 166, 69) !important;
+    color: rgb(255, 255, 255) !important;
+    font-weight: bold !important;
+    text-align: center !important;
+}
+.order-Completed .ant-select-selector{
+    background-color: rgb(88, 190, 88) !important;
+    color: rgb(255, 255, 255) !important;
+    font-weight: bold !important;
+    text-align: center !important;
+}
+.order-Rejected .ant-select-selector{
+    background-color: rgb(187, 70, 70) !important;
+    color: rgb(255, 255, 255) !important;
+    font-weight: bold !important;
+    text-align: center !important;
+}
+
+.ant-select-arrow {
+    display: none !important;
+}
+
+.view-order p {
+    margin-bottom: 5px;
+}
+
+.shipping .stdropdown-container {
+    width: 60% !important;
+}

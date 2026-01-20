@@ -1,0 +1,52 @@
+.home1 {
+    color: whitesmoke;
+    background: #dc3545;
+  }
+  .home2 {
+    color: whitesmoke;
+    background: #dc3545;
+  }
+  .home3 {
+    color: whitesmoke;
+    background: #dc3545;
+  }
+  .home4 {
+    color: whitesmoke;
+    background: #dc3545;
+  }
+  
+  .sub-container {
+    width: 90%;
+    margin: auto;
+  }
+  .user_panel_bg {
+    background: url("../../assets/images/logo.png"), no-repeat;
+   
+    background-size: cover;
+    background-position: center;
+    height: 280px;
+  }
+  .user_panel {
+    width: 90%;
+    margin: auto;
+    position: relative;
+  }
+  /* .user-panel img {
+  width: 20%;
+  } */
+  .user_profile a {
+    top: -65px;
+    position: absolute;
+  
+    width: 120px;
+    border-radius: 50%;
+    z-index: 9999;
+  }
+  .user_profile img {
+    position: absolute;
+  
+    width: 120px;
+  
+    z-index: 9999;
+  }
+  
