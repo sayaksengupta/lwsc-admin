@@ -47,6 +47,7 @@
     "classnames": "^2.5.1",
     "core-js": "^3.36.1",
     "dayjs": "^1.11.18",
+    "express": "^5.2.1",
     "framer-motion": "^11.0.25",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",

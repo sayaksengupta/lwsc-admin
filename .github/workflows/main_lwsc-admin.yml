@@ -1,13 +1,10 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy Node.js app to Azure Web App - lwsc-admin
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:  # Allows manual trigger from GitHub UI
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,25 +17,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'  # You can change to '20.x' if you prefer LTS
-          cache: 'npm'          # Automatically caches node_modules for faster runs
+          node-version: '22.x'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci                   # Cleaner and faster than npm install
+        run: npm ci
 
       - name: Build React app (Vite)
-        run: npm run build            # Creates the 'build/' folder
+        run: npm run build
 
-      # Optional: Run tests if you have them
-      # - name: Run tests
-      #   run: npm test --if-present
-
-      - name: Upload artifact for deployment
+      - name: Upload artifact for deployment (full source + build)
         uses: actions/upload-artifact@v4
         with:
           name: node-app
           path: .
-          # Everything is uploaded: server.js, package.json, fresh build/, etc.
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,11 +45,17 @@ jobs:
         with:
           name: node-app
 
-      - name: Deploy to Azure Web App
+      - name: Create deployment ZIP (exclude heavy/unneeded folders)
+        run: |
+          zip -r deploy-package.zip . \
+            -x "node_modules/*" ".git/*" ".github/*" "build/*"  # ← optional: exclude node_modules if you want Azure to install
+          # If you keep node_modules: remove the -x "node_modules/*" part
+
+      - name: Deploy zipped package to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'lwsc-admin'
           slot-name: 'Production'
-          package: .
+          package: deploy-package.zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_30517D4EA07A411AA0F68CE3FEDD3A62 }}
