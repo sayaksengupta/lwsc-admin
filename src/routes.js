@@ -15,6 +15,7 @@ const MoodLogs = React.lazy(() => import('./views/logs/MoodLogs'))
 const HydrationLogs = React.lazy(() => import('./views/logs/HydrationLogs'))
 const MedicationLogs = React.lazy(() => import('./views/logs/MedicationLogs'))
 const Facilities = React.lazy(() => import('./views/facilities/Facilities'))
+const Articles = React.lazy(() => import('./views/resources/Articles'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -23,6 +24,7 @@ const routes = [
   { path: '/profile', name: 'Profile', element: Profile },
   { path: '/users', name: 'Users', element: UsersList },
   { path: '/facilities', name: 'Facilities', element: Facilities },
+  { path: '/resources/articles', name: 'Articles', element: Articles },
   { path: '/pain-locations', name: 'Pain Locations', element: PainLocations },
   { path: '/rewards/achievements', name: 'Achievements', element: Achievements },
   { path: '/rewards/badges', name: 'Badges', element: Badges },

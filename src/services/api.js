@@ -128,4 +128,12 @@ export const facilityApi = {
   deleteFacility: (id) => api.delete(`/api/v1/admin/facilities/${id}`),
 };
 
+export const articleApi = {
+  getArticles: (params) => api.get('/api/v1/admin/articles', { params }),
+  getArticleById: (id) => api.get(`/api/v1/admin/articles/${id}`),
+  createArticle: (data) => api.post('/api/v1/admin/articles', data),
+  updateArticle: (id, data) => api.put(`/api/v1/admin/articles/${id}`, data),
+  deleteArticle: (id) => api.delete(`/api/v1/admin/articles/${id}`),
+};
+
 export default api;

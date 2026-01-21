@@ -14,9 +14,8 @@
   "author": "The CoreUI Team (https://github.com/orgs/coreui/people)",
   "scripts": {
     "build": "vite build",
-    "lint": "eslint \"src/**/*.js\"",
-    "serve": "vite preview",
-    "start": "vite"
+    "start": "node server.js",
+    "dev": "vite"
   },
   "dependencies": {
     "@coreui/chartjs": "^4.0.0",

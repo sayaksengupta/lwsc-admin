@@ -9,6 +9,7 @@ import {
   cilStar,
   cilBadge,
   cilList,
+  cilBook,
 } from '@coreui/icons'
 
 let _nav = [
@@ -43,6 +44,18 @@ let _nav = [
     name: 'Facilities',
     to: '/facilities',
     icon: <CIcon icon={cilLocationPin} customClassName="nav-icon" />, 
+  },
+  {
+    component: CNavGroup,
+    name: 'Resources',
+    icon: <CIcon icon={cilBook} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Articles',
+        to: '/resources/articles',
+      },
+    ],
   },
   {
     component: CNavGroup,
