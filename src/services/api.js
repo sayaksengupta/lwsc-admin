@@ -131,8 +131,12 @@ export const facilityApi = {
 export const articleApi = {
   getArticles: (params) => api.get('/api/v1/admin/articles', { params }),
   getArticleById: (id) => api.get(`/api/v1/admin/articles/${id}`),
-  createArticle: (data) => api.post('/api/v1/admin/articles', data),
-  updateArticle: (id, data) => api.put(`/api/v1/admin/articles/${id}`, data),
+  createArticle: (formData) => api.post('/api/v1/admin/articles', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }),
+  updateArticle: (id, formData) => api.put(`/api/v1/admin/articles/${id}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }),
   deleteArticle: (id) => api.delete(`/api/v1/admin/articles/${id}`),
 };
 

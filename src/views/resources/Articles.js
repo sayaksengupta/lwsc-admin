@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Space, Popconfirm, message, Card, Typography, Modal, Form, Input, DatePicker, Select, Tag } from 'antd';
-import { PlusOutlined, DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons';
+import { Table, Button, Space, Popconfirm, message, Card, Typography, Modal, Form, Input, DatePicker, Select, Tag, Upload } from 'antd';
+import { PlusOutlined, DeleteOutlined, EditOutlined, LinkOutlined, UploadOutlined } from '@ant-design/icons';
 import { articleApi, API_BASE_URL } from 'src/services/api';
 import dayjs from 'dayjs';
 
@@ -15,6 +15,7 @@ const Articles = () => {
   const [form] = Form.useForm();
   const [total, setTotal] = useState(0);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
+  const [fileList, setFileList] = useState([]);
 
   const fetchArticles = async (page = 1, pageSize = 10) => {
     setLoading(true);
@@ -40,6 +41,7 @@ const Articles = () => {
         publishedAt: dayjs(),
         source: 'internal'
     });
+    setFileList([]);
     setIsModalVisible(true);
   };
 
@@ -49,6 +51,7 @@ const Articles = () => {
       ...record,
       publishedAt: dayjs(record.publishedAt),
     });
+    setFileList(record.imageUrl ? [{ url: record.imageUrl.startsWith('http') ? record.imageUrl : `${API_BASE_URL}${record.imageUrl}`, uid: '-1', name: 'image.png' }] : []);
     setIsModalVisible(true);
   };
 
@@ -65,17 +68,24 @@ const Articles = () => {
   const handleModalOk = async () => {
     try {
       const values = await form.validateFields();
-      const payload = {
-        ...values,
-        publishedAt: values.publishedAt.toISOString()
-      };
+      const formData = new FormData();
+      
+      formData.append('title', values.title);
+      formData.append('excerpt', values.excerpt || '');
+      formData.append('url', values.url);
+      formData.append('source', values.source);
+      formData.append('publishedAt', values.publishedAt.toISOString());
+      
+      if (fileList[0]?.originFileObj) {
+        formData.append('image', fileList[0].originFileObj);
+      }
 
       setLoading(true);
       if (editingItem) {
-        await articleApi.updateArticle(editingItem._id, payload);
+        await articleApi.updateArticle(editingItem._id, formData);
         message.success('Article updated successfully');
       } else {
-        await articleApi.createArticle(payload);
+        await articleApi.createArticle(formData);
         message.success('Article created successfully');
       }
       setIsModalVisible(false);
@@ -87,14 +97,27 @@ const Articles = () => {
     }
   };
 
+  const uploadProps = {
+    onRemove: () => {
+      setFileList([]);
+    },
+    beforeUpload: (file) => {
+      setFileList([file]);
+      return false; // Prevent automatic upload
+    },
+    fileList,
+  };
+
   const columns = [
     {
       title: 'Image',
       dataIndex: 'imageUrl',
       key: 'imageUrl',
-      render: (url) => url ? (
-        <img src={url} alt="article" style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 4 }} />
-      ) : <Tag>No Image</Tag>
+      render: (url) => {
+        if (!url) return <Tag>No Image</Tag>;
+        const src = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
+        return <img src={src} alt="article" style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 4 }} />;
+      }
     },
     {
       title: 'Title',
@@ -195,11 +218,13 @@ const Articles = () => {
             <Input placeholder="https://example.com/article" />
           </Form.Item>
 
-          <Form.Item
-            name="imageUrl"
-            label="Image URL"
-          >
-            <Input placeholder="https://example.com/image.jpg" />
+          <Form.Item label="Article Image">
+            <Upload {...uploadProps} listType="picture">
+              <Button icon={<UploadOutlined />}>Select Image</Button>
+            </Upload>
+            <p style={{ color: '#8c8c8c', fontSize: '12px', marginTop: '8px' }}>
+              Upload an image to represent the article.
+            </p>
           </Form.Item>
 
           <div style={{ display: 'flex', gap: '16px' }}>
