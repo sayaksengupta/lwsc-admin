@@ -41,11 +41,11 @@ jobs:
         with:
           name: app-source
 
-      - name: Create clean ZIP for Oryx (no node_modules)
+      - name: Create deployment ZIP
         run: |
-          rm -rf node_modules  # Ensure none sneak in
+          npm prune --production
           zip -r deploy.zip . \
-            -x "*.git*" "*.github*" "node_modules/*" "*.log" "npm-debug.log"
+            -x "*.git*" "*.github*" "*.log" "npm-debug.log"
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
