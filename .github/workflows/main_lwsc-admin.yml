@@ -20,15 +20,15 @@ jobs:
           node-version: '22.x'
           cache: 'npm'
 
-      - name: Install dependencies & build React
+      - name: Install deps & build React
         run: |
           npm ci
           npm run build
 
-      - name: Upload artifact (source + built files)
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-package
+          name: app-source
           path: .
 
   deploy:
@@ -39,19 +39,19 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: app-package
+          name: app-source
 
-      - name: Create ZIP (exclude node_modules and git files)
+      - name: Create clean ZIP for Oryx (no node_modules)
         run: |
+          rm -rf node_modules  # Ensure none sneak in
           zip -r deploy.zip . \
-            -x "node_modules/*" ".git/*" ".github/*" \
-            "*.log" "npm-debug.log"  # optional extras
+            -x "*.git*" "*.github*" "node_modules/*" "*.log" "npm-debug.log"
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'lwsc-admin'          # ← Change to your new app name if different (e.g., lwsc-admin-new)
+          app-name: 'lwsc-admin'  # Update if new instance name changed
           slot-name: 'Production'
           package: deploy.zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_401D9FFCBB9F4728A2597D9ABED27555 }}
