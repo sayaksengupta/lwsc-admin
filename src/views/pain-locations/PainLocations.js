@@ -64,8 +64,12 @@ const PainLocations = () => {
       formData.append('name', values.name);
       formData.append('isActive', values.isActive);
       
-      if (fileList[0]?.originFileObj) {
-        formData.append('logo', fileList[0].originFileObj);
+      if (fileList[0]) {
+        if (fileList[0].originFileObj) {
+          formData.append('logo', fileList[0].originFileObj);
+        } else if (fileList[0] instanceof File) {
+          formData.append('logo', fileList[0]);
+        }
       }
 
       setLoading(true);

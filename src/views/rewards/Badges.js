@@ -66,8 +66,12 @@ const Badges = () => {
       formData.append('description', values.description);
       formData.append('coinCost', values.coinCost);
       
-      if (fileList[0]?.originFileObj) {
-        formData.append('icon', fileList[0].originFileObj);
+      if (fileList[0]) {
+        if (fileList[0].originFileObj) {
+          formData.append('icon', fileList[0].originFileObj);
+        } else if (fileList[0] instanceof File) {
+          formData.append('icon', fileList[0]);
+        }
       }
 
       setLoading(true);

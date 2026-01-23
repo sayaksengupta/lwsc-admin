@@ -83,8 +83,12 @@ const Achievements = () => {
       };
       formData.append('criteria', JSON.stringify(criteria));
       
-      if (fileList[0]?.originFileObj) {
-        formData.append('icon', fileList[0].originFileObj);
+      if (fileList[0]) {
+        if (fileList[0].originFileObj) {
+          formData.append('icon', fileList[0].originFileObj);
+        } else if (fileList[0] instanceof File) {
+          formData.append('icon', fileList[0]);
+        }
       }
 
       setLoading(true);

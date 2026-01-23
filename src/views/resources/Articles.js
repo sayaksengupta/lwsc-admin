@@ -76,8 +76,12 @@ const Articles = () => {
       formData.append('source', values.source);
       formData.append('publishedAt', values.publishedAt.toISOString());
       
-      if (fileList[0]?.originFileObj) {
-        formData.append('image', fileList[0].originFileObj);
+      if (fileList[0]) {
+        if (fileList[0].originFileObj) {
+          formData.append('image', fileList[0].originFileObj);
+        } else if (fileList[0] instanceof File) {
+          formData.append('image', fileList[0]);
+        }
       }
 
       setLoading(true);
