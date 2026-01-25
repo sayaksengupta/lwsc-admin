@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react'
-import { HashRouter, Route, Routes, Navigate, useLocation } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, Navigate, useLocation } from 'react-router-dom'
 import { CSpinner, useColorModes } from '@coreui/react'
 import './scss/style.scss'
 import 'react-toastify/dist/ReactToastify.css'
@@ -91,7 +91,7 @@ const App = () => {
   }, [isColorModeSet, setColorMode, storedTheme])
 
   return (
-    <HashRouter>
+    <BrowserRouter>
       <ProfileWatcher />
       <Suspense
         fallback={
@@ -115,7 +115,7 @@ const App = () => {
           />
         </Routes>
       </Suspense>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 

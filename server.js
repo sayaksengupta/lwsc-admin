@@ -18,7 +18,7 @@ app.get('/config.js', (req, res) => {
 })
 
 // React routing fix
-app.get('/*all', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 
