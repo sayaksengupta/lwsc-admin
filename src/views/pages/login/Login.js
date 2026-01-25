@@ -18,7 +18,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilLockLocked, cilUser } from "@coreui/icons";
-import logo from "../../../assets/logo.svg";
+import logo from "../../../assets/logo.jpg";
 import bg from "../../../assets/images/dashboard.jpg";
 import { authApi } from "src/services/api";
 

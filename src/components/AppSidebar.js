@@ -12,7 +12,7 @@ import {
 } from '@coreui/react'
 
 import { AppSidebarNav } from './AppSidebarNav'
-import logo from '../assets/logo.svg'
+import logo from '../assets/logo.jpg'
 import navigation from '../_nav'
 
 const AppSidebar = () => {
