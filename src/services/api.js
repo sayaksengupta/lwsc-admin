@@ -73,6 +73,7 @@ export const authApi = {
   forgotPassword: (data) => api.post('/api/v1/admin/auth/forgot-password', data),
   resetPassword: (data) => api.post('/api/v1/admin/auth/reset-password', data),
   updateProfile: (data) => api.put('/api/v1/admin/auth/me', data),
+  userDeleteAccount: (data) => api.post('/api/v1/auth/delete-account', data),
 };
 
 export const dashboardApi = {
